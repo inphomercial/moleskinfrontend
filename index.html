@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html ng-app="MoleskinApp">
+<head>
+    <title>MoleSkin</title>
+
+  	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/site.css">    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+</head>
+
+<body>
+   
+   <br>
+    <div class="row">
+        <div class="col-xs-3"></div>
+        <div class="col-xs-6">
+            <ol class="breadcrumb">
+                <li><a href="#login"><i class="fa fa-home"></i> Login</a></li>
+                <li><a href="#goals"><i class="fa fa-list fa-rotate-180"></i> Goals</a></li>
+                <li>
+                    <span ng-controller="usersController">                    
+                        <a href="#" ng-click="logout()">Log Out</a>
+                    </span>
+                </li>
+            </ol>
+        </div>
+        <div class="col-xs-3"></div>
+        <!-- <div ng-controller="usersController" class="col-xs-3">                    
+            <div><a href="#" ng-click="logout()" class="button small">Log Out</a></div>
+        </div> -->
+    </div>
+   
+    <div class="row">
+        <div class="small-12 columns">
+	       <div ng-view></div>
+        </div>
+    </div>
+
+  <!--   <form name="datepickerForm" class="form-inline" role="form">
+          <!-- Basic example -->
+<!--           <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
+            <label class="control-label"><i class="fa fa-calendar"></i> Date <small>(as date)</small></label>
+            <input type="text" class="form-control" ng-model="selectedDate" name="date" bs-datepicker>
+          </div>
+    </form> -->
+    
+    <!-- Source Venders -->
+    <script type="text/javascript" src="js/Vendor/angular.min.js"></script>
+    <script type="text/javascript" src="js/Vendor/angular-route.min.js"></script>
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="js/Vendor/bootstrap.min.js"></script>
+
+    <!-- Source MoleskinApp -->
+    <script type="text/javascript" src="js/Apps/moleskin.js"></script>
+
+    <!-- Source Services -->
+    <script type="text/javascript" src="js/Services/users_service.js"></script>
+   
+    <!-- Source Controllers -->
+    <script type="text/javascript" src="js/Controllers/goals_controller.js"></script>
+    <script type="text/javascript" src="js/Controllers/users_controller.js"></script>
+
+    <!-- Source Directives -->
+   <script type="text/javascript" src="js/Directives/datepicker_directive.js"></script>
+
+    <!-- Source Routes -->
+    <script type="text/javascript" src="js/Routes/routes.js"></script>
+
+</body>
+</html>

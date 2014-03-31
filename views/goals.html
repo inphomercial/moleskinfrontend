@@ -23,19 +23,37 @@
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
 			<div class="table-responsive">
-				<table width="100%" class="table table-bordered table-striped table-condensed table-hover">
+				<table width="100%" class="table table-bordered table-striped table-condensed">
 					<thead>
 						<tr>
 							<th>Goal</th>
 							<th>Due Date</th>
 							<th>Completed</th>
+							<th>Delete</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="goal in goals | filter:search">
-							<td ng-click="editGoal(goal, $index)">{{ goal.title }}</td>							
-							<td>{{ goal.due_date }}</td>
-							<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="goal.completed" ng-click="completeGoal(goal, $index)"></td>
+						<tr ng-repeat="goal in goals | filter:search | orderBy:'completed'">
+							<td editable-text="goal.title"
+								onbeforesave="checkTitle($data)"
+								onaftersave="updateGoal(goal)">
+							    {{ goal.title }}
+							</td>							
+							<td editable-date="goal.due_date"
+								onbeforesave="checkDueDate($data)"
+								onaftersave="updateGoal(goal)">
+								{{ goal.due_date }}
+							</td>
+							<td>
+								<input type="checkbox" 
+									ng-true-value="1" 
+									ng-false-value="0" 
+									ng-checked="goal.completed" 																	
+									ng-click="completeGoal(goal)">
+							</td>							
+							<td>
+								<button type="button" class="btn btn-danger" ng-click="deleteGoal(goal, $index)">Delete</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -48,17 +66,19 @@
 	
 	<div class="row">
 		<div class="col-xs-3"></div>
-		<div class="col-xs-3">
-			<form role="form" ng-submit="addGoal()">
+		<div class="col-xs-6">
+			<form class="form-inline" role="form" ng-submit="addGoal()">
 				<div class="form-group">
-					<label for="goal_title">Goal Title</label>
+					<!-- <label for="goal_title">Goal Title</label> -->
 				    <input type="text" class="form-control" id="goal_title" ng-model="new_goal_title" placeholder="Enter Goal">
-
-				    <label for="goal_due_date">Due Date</label>
-				    <input type="text" class="form-control" id="goal_due_date" ng-model="new_goal_due_date" placeholder="12/23/2014">
-				</div>		
-								
-				<button type="submit" class="btn btn-default">Submit</button>
+				</div>
+				<div class="form-group">
+				    <!-- <label for="goal_due_date">Due Date</label> -->
+				    <input type="text" class="form-control" id="goal_due_date" ng-model="new_goal_due_date" placeholder="2014-03-23">
+				</div>
+				<div class="form-group">					
+					<button type="submit" class="btn btn-default">Submit</button>
+				</div>
 			</form>
 		</div>
 		<div class="col-xs-3"></div>

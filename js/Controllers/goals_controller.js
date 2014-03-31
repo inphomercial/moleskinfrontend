@@ -1,7 +1,7 @@
 MoleskinApp.controller('goalsController', function ($scope, $http, UsersService) {
 	
 	// First check if user is logged in
-	UsersService.isLoggedIn();
+	//UsersService.isLoggedIn();
 
 	// Create our goals container
 	$scope.goals = {};
@@ -39,7 +39,7 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService)
 				// So I can give it the mysql id
 				goal.id = data.id;
 
-				$scope.addGoalToList(goal);
+				addGoalToList(goal);
 				$scope.new_goal_title = "";
 				$scope.new_goal_due_date = "";
 			})
@@ -48,26 +48,57 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService)
 			});	
 	},
 
-	$scope.completeGoal = function(goal, $index) {
+	addGoalToList = function(goal) {		
+		$scope.goals.push(goal);
+	},
+
+	$scope.checkTitle = function(data) {
+		if( data == "" )
+		{
+			return "Title cannot be blank!";
+		}		
+	}
+
+	$scope.checkDueDate = function(data) {	
+		if( data == "" )
+		{
+			return false;
+		}
+	},
+
+	$scope.completeGoal = function(goal) {
 		
 		goal.completed = goal.completed ? false : true;
 
+		$scope.updateGoal(goal);
+ 	},
+
+	$scope.updateGoal = function(goal) {
+			
 		$http.put(MoleskinApp.url + 'goals/' + goal.id, goal)
-			.success(function() {
-				
+			.success(function(data) {
+				console.log("goal updated");
 			})
 			.error(function(status) {
 				alert(status);
 			})
+	},
 
- 	},
+	$scope.deleteGoal = function(goal, $index) {
 
- 	$scope.editGoal = function(goal, $index) {
- 		console.log('editing goal');
- 	},
+		$http.delete(MoleskinApp.url + 'goals/' + goal.id)
+			.success(function(data) {
+				console.log("goal deleted");
 
-	$scope.addGoalToList = function(goal) {		
-		$scope.goals.push(goal);
+				for(var i=0;i<$scope.goals.length;i++) {
+					if($scope.goals[i].id == goal.id) {
+						$scope.goals.splice(i, 1);
+					}
+				}
+			})
+			.error(function(status) {
+				alert(status);
+			})
 	}
 	
 });

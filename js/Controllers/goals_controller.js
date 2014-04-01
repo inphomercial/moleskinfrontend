@@ -48,6 +48,26 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService)
 			});	
 	},
 
+	$scope.pushToTodo = function(goal) {
+		var todo = {
+			title: goal.title
+		};
+
+		$http.post(MoleskinApp.url + 'todos', todo)
+			.success(function(data) {
+				console.log("moved goal to todo!");	
+			})
+			.error(function(status) {
+				alert(status);				
+			});	
+
+		for(var i=0;i<$scope.goals.length;i++) {
+					if($scope.goals[i].id == goal.id) {
+						$scope.goals.current_goal = 1;
+					}
+				}
+	}
+
 	addGoalToList = function(goal) {		
 		$scope.goals.push(goal);
 	},

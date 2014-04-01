@@ -1,10 +1,10 @@
 
-<div ng-controller="goalsController">
+<div ng-controller="todosController">
 	<br>
 	<div class="row">	
 		<div class="col-xs-3"></div>
 		<div class="col-xs-9">
-			<h1>Goals <small ng-if="remaining()"> ({{ remaining() }}/{{goals.length}})</small></h1>
+			<h1>Todos <small ng-if="remaining()"> ({{ remaining() }}/{{todos.length}})</small></h1>
 		</div>
 	</div>
 	
@@ -23,36 +23,39 @@
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
 			<div class="table-responsive">
-				<table width="100%" class="table table-bordered table-striped table-condensed">
+				<table width="100%" class="table table-striped table-condensed">
 					<thead>
-						<tr>
-							<th>Goal</th>
-							<th>Due Date</th>
-							<th>Completed</th>
-							<th>Delete</th>
+						<tr>							
+							<th>Title</th>
+							<th>Date</th>
+							<th>Pushed Times</th>
+							<th>Date Completed</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="goal in goals | filter:search | orderBy:'completed'">
-							<td editable-text="goal.title"
+						<tr ng-repeat="todo in todos | filter:search">
+							<td editable-text="todo.title"
 								onbeforesave="checkTitle($data)"
-								onaftersave="updateGoal(goal)">
-							    {{ goal.title }}
+								onaftersave="updateGoal(todo)">
+							    {{ todo.title }}
 							</td>							
-							<td editable-date="goal.due_date"
+							<td editable-date="todo.date"
 								onbeforesave="checkDueDate($data)"
-								onaftersave="updateGoal(goal)">
-								{{ goal.due_date }}
+								onaftersave="updateGoal(todo)">
+								{{ todo.date }}
 							</td>
+							<td editable-number="todo.pushed_times"
+								onbeforesave="checkDueDate($data)"
+								onaftersave="updateGoal(todo)">
+								{{ todo.pushed_times }}
+							</td>
+							<td editable-date="todo.date_completed"
+								onbeforesave="checkDueDate($data)"
+								onaftersave="updateGoal(todo)">
+								{{ todo.date_completed }}
+							</td>				
 							<td>
-								<input type="checkbox" 
-									ng-true-value="1" 
-									ng-false-value="0" 
-									ng-checked="goal.completed" 																	
-									ng-click="completeGoal(goal)">
-							</td>							
-							<td>
-								<button type="button" class="btn btn-danger" ng-click="deleteGoal(goal, $index)">Delete</button>
+								<button type="button" class="btn btn-danger" ng-click="deleteGoal(todo, $index)"> <i class="fa fa-trash-o"></i> </button>
 							</td>
 						</tr>
 					</tbody>
@@ -67,15 +70,15 @@
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
-			<form class="form-inline" role="form" ng-submit="addGoal()">
+			<form class="form-inline" role="form" ng-submit="addTodo()">
 				<div class="form-group">
 					<!-- <label for="goal_title">Goal Title</label> -->
-				    <input type="text" class="form-control" id="goal_title" ng-model="new_goal_title" placeholder="Enter Goal">
+				    <input type="text" class="form-control" id="todo_title" ng-model="new_todo_title" placeholder="Enter Goal">
 				</div>
-				<div class="form-group">
-				    <!-- <label for="goal_due_date">Due Date</label> -->
+				<!-- <div class="form-group">
+				   <label for="goal_due_date">Due Date</label>
 				    <input type="text" class="form-control" id="goal_due_date" ng-model="new_goal_due_date" placeholder="2014-03-23">
-				</div>
+				</div> -->
 				<div class="form-group">					
 					<button type="submit" class="btn btn-default">Submit</button>
 				</div>

@@ -1,4 +1,4 @@
-MoleskinApp.controller('goalsController', function ($scope, $http, UsersService) {
+MoleskinApp.controller('goalsController', function ($scope, $http, UsersService, DatesService) {
 	
 	// First check if user is logged in
 	//UsersService.isLoggedIn();
@@ -50,8 +50,13 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService)
 
 	$scope.pushToTodo = function(goal) {
 		var todo = {
-			title: goal.title
+			title: goal.title,
+			user_id: UsersService.getUserId(),
+			date: DatesService.getToday(),
+			completed: 0			
 		};
+
+		console.log(todo);
 
 		$http.post(MoleskinApp.url + 'todos', todo)
 			.success(function(data) {
@@ -61,11 +66,13 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService)
 				alert(status);				
 			});	
 
-		for(var i=0;i<$scope.goals.length;i++) {
-					if($scope.goals[i].id == goal.id) {
-						$scope.goals.current_goal = 1;
-					}
-				}
+		for(var i=0;i<$scope.goals.length;i++) 
+		{
+			if($scope.goals[i].id == goal.id) 
+			{
+				$scope.goals.current_goal = 1;
+			}
+		}
 	}
 
 	addGoalToList = function(goal) {		
@@ -111,7 +118,7 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService)
 				console.log("goal deleted");
 
 				for(var i=0;i<$scope.goals.length;i++) {
-					if($scope.goals[i].id == goal.id) {
+					if($scope.goals[i].id == goal.id) {						
 						$scope.goals.splice(i, 1);
 					}
 				}

@@ -2,7 +2,8 @@ MoleskinApp.factory('UsersService', function($http, $location) {
     
     var UsersService = {
 
-        email: '',
+        email: null,
+        user_id: null,
         isLogged: false,
 
         isLoggedIn: function() {
@@ -15,6 +16,10 @@ MoleskinApp.factory('UsersService', function($http, $location) {
             {
                 $location.path('/login');
             }
+        },
+
+        getUserId: function() {
+            return UsersService.user_id;
         }
 
     };

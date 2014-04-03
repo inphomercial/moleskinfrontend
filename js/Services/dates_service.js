@@ -2,28 +2,26 @@ MoleskinApp.factory('DatesService', function($http, $location) {
     
     var DatesService = {
 
-        current_position: '',
-        today: '',
-        tomorrow: '',
-        yesterday: '',
+        current_position: null, 
+        current_position_fancy: null,    
 
         incrementDatePosition: function() {
 
             var m = moment(DatesService.current_position).add('days', 1);
 
-            DatesService.current_position = m.format("YYYY-MM-DD");
+            DatesService.current_position = m.format("YYYY-MM-DD");            
         },
 
         decrementDatePosition: function() {
 
             var m = moment(DatesService.current_position).add('days',-1);
 
-            DatesService.current_position = m.format("YYYY-MM-DD");
+            DatesService.current_position = m.format("YYYY-MM-DD");            
         },
+        
+        getToday: function() {
 
-        getCurrentPosition: function() {
-
-            if(DatesService.current_position == '')
+            if(DatesService.current_position == null)
             {
                 var y = moment().get('year');
                 var m = moment().get('month')+1;
@@ -31,13 +29,27 @@ MoleskinApp.factory('DatesService', function($http, $location) {
 
                 var date = y + "-" + m + "-" + d;
 
-                DatesService.current_position = moment(date).format("YYYY-MM-DD");
+                DatesService.current_position = moment(date).format("YYYY-MM-DD");                
             }
 
             return DatesService.current_position;
         },
 
-        getToday: function() {
+        getTodayFancy: function() {
+
+            var m = moment(DatesService.getToday()).format("MMM Do dddd");
+
+            return m;
+        },
+
+        getTomorrow: function() {
+            
+            var m = moment(DatesService.current_position).add('days', 1);
+            
+            return moment(m).format("YYYY-MM-DD");           
+        }
+
+        /*getToday: function() {
 
             var y = moment().get('year');
             var m = moment().get('month')+1;
@@ -47,8 +59,8 @@ MoleskinApp.factory('DatesService', function($http, $location) {
 
              return DatesService.today = moment(date).format("YYYY-MM-DD");
         },
-
-        getYesterday: function() {
+        */
+        /*getYesterday: function() {
 
             var y = moment().get('year');
             var m = moment().get('month')+1;
@@ -57,18 +69,7 @@ MoleskinApp.factory('DatesService', function($http, $location) {
             var date = y + "-" + m + "-" + d;
 
             return DatesService.yesterday = moment(date).format("YYYY-MM-DD");
-        },
-
-        getTomorrow: function() {
-        
-            var y = moment().get('year');
-            var m = moment().get('month')+1;
-            var d = moment().get('day');
-
-            var date = y + "-" + m + "-" + d;
-
-            return DatesService.tomorrow = moment(date).format("YYYY-MM-DD");
-        }
+        },*/
     };
 
     return DatesService;

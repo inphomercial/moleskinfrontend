@@ -46,10 +46,16 @@
 								<td>
 									<span class="btn btn-danger" ng-click="deleteTodo(todo)"> <i class="fa fa-trash-o"></i> </span>
 								</td>
-								<td editable-text="todo.title"
-									onbeforesave="checkTitle($data)"
-									onaftersave="updateTodo(todo)">
+								<td ng-switch on="todo.completed">
+								 	<span style="color:gray; text-decoration:line-through" ng-switch-when="1">
+								    	<strong>{{ todo.title }}</strong>
+								   	</span>
+								   	<span ng-switch-default 
+								   		  editable-text="todo.title"
+										  onbeforesave="checkTitle($data)"
+										  onaftersave="updateTodo(todo)">
 								    <strong>{{ todo.title }}</strong>
+								   	</span>
 								</td>																		
 								<td>
 									<span class="badge">{{ todo.pushed_times }}</span>		

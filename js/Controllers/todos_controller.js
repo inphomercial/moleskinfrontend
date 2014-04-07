@@ -1,4 +1,4 @@
-MoleskinApp.controller('todosController', ['$scope', '$http', '$location', 'UsersService', 'DatesService', 'TodosService', function ($scope, $http, $location, UsersService, DatesService, TodosService) {
+MoleskinApp.controller('todosController', function ($scope, $http, $location, UsersService, DatesService) {
 
 	
 	// First check if user is logged in
@@ -9,18 +9,32 @@ MoleskinApp.controller('todosController', ['$scope', '$http', '$location', 'User
 	$scope.current_position = DatesService.getToday();
 	$scope.current_position_fancy = DatesService.getTodayFancy();
 
-	// Get first set of todos
+	/*// Get first set of todos
 	getTodos(DatesService.getToday());
 
-	function getTodos(date) {
-		TodosService.getTodos(date).then(function(data) {
-			console.log(data);
-		});
+	function getTodos(date) {			
+			$scope.todos = TodosService.getTodos(date);		
 		//$scope.todos = TodosService.getTodos(date);
+
+            var url = MoleskinApp.url + 'todos/' + date;
+            
+            console.log("url " + url);
+
+            // Get todos from API
+            $http.get(url)
+                .success(function (data, status) {
+        
+                    $scope.todos = data;
+                                        
+                    //return TodosService.todos;
+                })
+                .error(function(status) {
+                    alert(status);
+                });        
 	}
-	/*
-	$scope.current_position = DatesService.getToday();
-	$scope.current_position_fancy = DatesService.getTodayFancy();
+	/**/
+	/*$scope.current_position = DatesService.getToday();
+	$scope.current_position_fancy = DatesService.getTodayFancy();*/
 
 	// Get todos from API
 	$http.get(MoleskinApp.url + 'todos/' + DatesService.getToday())
@@ -29,7 +43,7 @@ MoleskinApp.controller('todosController', ['$scope', '$http', '$location', 'User
 		})
 		.error(function(status) {
 			alert(status);
-		});*/
+		});
 /*
 	$scope.todos = TodosService.getTodos()
 		.then(function(result) {
@@ -167,4 +181,4 @@ MoleskinApp.controller('todosController', ['$scope', '$http', '$location', 'User
 			return "Title cannot be blank!";
 		}		
 	}
-}]);
+});

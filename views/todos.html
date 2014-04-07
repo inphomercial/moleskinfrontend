@@ -1,5 +1,5 @@
 
-<!-- <div ng-controller="goalsWeeklyController">
+<div ng-controller="goalsPushedController">
 
 	<div class="row">
 		<div class="col-xs-4"></div>
@@ -8,14 +8,20 @@
 
 			<table class="table table-condensed">
 				<tbody>
-					<tr ng-repeat="goal in goals">
+					<tr ng-repeat="goal in goals_pushed">
 						<td>
-							<span>{{ goal.todo_id }}</span>
+							<span>{{ goal.id }}</span>
 						</td>
 						<td>
 							<span>{{ goal.title }}</span>
+						</td>								
+						<td>
+							<span>{{ goal.actionable_completed }} / {{ goal.actionable_total }}</span>
 						</td>
 						<td>
+							<span ng-click="createTodoFromGoal(goal)"><i class="fa fa-caret-square-o-right"></i></span>
+						</td>
+						<!-- <td>
 							<span ng-switch="goal.completed">
 								<span ng-switch-when="0">
 									<i class="fa fa-square-o"></i>
@@ -24,8 +30,8 @@
 									<i class="fa fa-square"></i>
 								</span>
 							</span>
-						</td>
-						<td>
+						</td> -->
+						<!-- <td>
 							<span ng-switch="goal.pushed">
 								<span ng-switch-when="true">
 									<i class="fa fa-chevron-circle-down"></i>
@@ -34,34 +40,28 @@
 									<i class="fa fa-chevron-down"></i>
 								</span>
 							</span>
-						</td>
-						<td>
-							<span ng-click="pushToTodo(goal)"><i class="fa fa-caret-square-o-right"></i></span>
-						</td>
-						<td>
-							<span>{{ goal_weekly.completed }} / {{ goal_weekly.total }}</span>
-						</td>
-						<td>
+						</td> -->			
+						<!-- <td>
 							<span ng-repeat="todo in goal">
-								<span>{{ todo }}</span> -->
-								<!-- <span ng-switch="todo.completed">
+								<span>{{ todo }}</span>
+								<span ng-switch="todo.completed">
 									<span ng-switch-when="1">
 										<i class="fa fa-square"></i>
 									</span>
 									<span ng-switch-default>
 										<i class="fa fa-square-o"></i>
 									</span>
-								</span> -->
-						<!-- 	</span>
+								</span>
+							</span>
 						</td> -->
-				<!-- 	</tr>
+					</tr>
 				</tbody>
 			</table>
 
 		</div>
 	</div>
 
-</div> -->
+</div>
 
 <div ng-controller="todosController">
 

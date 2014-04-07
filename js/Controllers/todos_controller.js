@@ -1,14 +1,25 @@
-MoleskinApp.controller('todosController', function ($scope, $http, $location, UsersService, DatesService) {
-
-	
-	// First check if user is logged in
-	//UsersService.isLoggedIn();
+MoleskinApp.controller('todosController', function ($scope, $http, $location, UsersService, TodosService, GoalsService, DatesService) {
 
 	// Create our todos container
 	$scope.todos = [], 
 	$scope.current_position = DatesService.getToday();
 	$scope.current_position_fancy = DatesService.getTodayFancy();
 
+	$scope.$on('todos.update', function( event ) {
+		$scope.todos = TodosService.todos;
+	});
+
+	// Initilization 
+	var r = TodosService.getAllTodosByDate(DatesService.getToday());
+	r.then(function (res) {
+		$scope.todos = TodosService.todos;	
+	})
+
+
+	// First check if user is logged in
+	//UsersService.isLoggedIn();
+
+	
 	/*// Get first set of todos
 	getTodos(DatesService.getToday());
 
@@ -36,14 +47,14 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 	/*$scope.current_position = DatesService.getToday();
 	$scope.current_position_fancy = DatesService.getTodayFancy();*/
 
-	// Get todos from API
+	/*// Get todos from API
 	$http.get(MoleskinApp.url + 'todos/' + DatesService.getToday())
 		.success(function(todos) {
 			$scope.todos = todos;
 		})
 		.error(function(status) {
 			alert(status);
-		});
+		});*/
 /*
 	$scope.todos = TodosService.getTodos()
 		.then(function(result) {
@@ -58,7 +69,7 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 
 	$scope.todos = TodosService.todos;*/
 
-	$scope.add = function()
+	/*$scope.add = function()
 	{
 		var todo = {
 			title: "AYYYYY",
@@ -67,7 +78,7 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 		}
 
 		TodosService.addTodo(todo);
-	},
+	},*/
 
 	$scope.decrementDate = function() {
 
@@ -100,9 +111,9 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 	$scope.addTodo = function() {
 		
 		var todo = { 		
-			title: $scope.new_todo_title,
-			date: DatesService.current_position,
 			user_id: UsersService.getUserId(),
+			title: $scope.new_todo_title,
+			date: DatesService.getToday(),			
 			completed: 0,
 			pushed_times: 0
 		};
@@ -110,6 +121,7 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 		$http.post(MoleskinApp.url + 'todos', todo)
 			.success(function(data) {
 				
+				console.log(data);
 				// Need to update the todo with what the server returned
 				// So I can give it the mysql id
 				todo.id = data.id;
@@ -129,6 +141,29 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 	$scope.completeTodo = function(todo) {				
 		todo.completed = todo.completed ? 0 : 1;
 		$scope.updateTodo(todo);
+
+		if(todo.completed == 1)
+		{
+			if(todo.goal_id)
+			{
+				var goal = GoalsService.getPushedGoal(todo.goal_id);
+
+				goal.actionable_completed++;
+
+				GoalsService.updateGoal(goal);			
+			}	
+		}
+		else
+		{
+			if(todo.goal_id)
+			{
+				var goal = GoalsService.getPushedGoal(todo.goal_id);
+
+				goal.actionable_completed--;
+
+				GoalsService.updateGoal(goal);			
+			}	
+		}
  	},
 
  	$scope.pushTodo = function(todo) {
@@ -165,6 +200,8 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 	}
 
 	$scope.updateTodo = function(todo) {
+
+		console.log(todo);
 
 		$http.put(MoleskinApp.url + 'todos/' + todo.id, todo)
 			.success(function(data) {	

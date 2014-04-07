@@ -1,38 +1,28 @@
-MoleskinApp.factory('TodosService', function($http, $rootScope, $q, DatesService) {
+MoleskinApp.factory('TodosService', function($http, $rootScope) {
     
     var TodosService = {
 
-        /*todos: [
-            {title:"eat stuff", goal_id: 2, completed: 0},
-            {title:"mouse", goal_id: 3, completed: 1}
-        ],
-*/
-        todos: [],
+       todos: [],
+      
+       // Get Todos from API
+       getAllTodosByDate: function(date) {
 
-        var addTodo: function ( todo ) {
+        return $http.get(MoleskinApp.url + 'todos/' + date)
+              .success(function(todos) {
+                  TodosService.todos = todos;
+              })
+              .error(function(status) {
+                  alert(status);
+              });
 
-            TodosService.todos.push( todo );
-            $rootScope.$emit( 'todo.add' );
+            console.log(huk);
         },
-
-        var getTodos: function( date ) {
-
-            var url = MoleskinApp.url + 'todos/' + date;
-            
-            console.log("url " + url);
-
-            // Get todos from API
-            $http.get(url)
-                .success(function (data, status) {
-        
-                    TodosService.todos = data;
-                                        
-                    return TodosService.todos;
-                })
-                .error(function(status) {
-                    alert(status);
-                });        
+      
+        addTodo: function( todo ) {
+          TodosService.todos.push(todo);
+          $rootScope.$emit( 'todos.update' );
         } 
+
     };
 
     return TodosService;

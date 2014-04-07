@@ -4,7 +4,7 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService,
 	//UsersService.isLoggedIn();
 
 	// Create our goals container
-	$scope.goals = {};
+	$scope.goals = [];
 
 	// Get goals from API
 	$http.get(MoleskinApp.url + 'goals')
@@ -28,8 +28,11 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService,
 	$scope.addGoal = function() {
 		var goal = { 		
 			title: $scope.new_goal_title,
+			actionable_total: $scope.new_goal_actionable_total,
+			actionable_completed: 0,
 			due_date: $scope.new_goal_due_date,
-			completed: false		
+			pushed: false,
+			completed: false
 		};
 		
 		$http.post(MoleskinApp.url + 'goals', goal)
@@ -41,6 +44,7 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService,
 
 				addGoalToList(goal);
 				$scope.new_goal_title = "";
+				$scope.new_goal_actionable_total = "";
 				$scope.new_goal_due_date = "";
 			})
 			.error(function(status) {
@@ -48,33 +52,11 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService,
 			});	
 	},
 
-	$scope.pushToTodo = function(goal) {
-		var todo = {
-			title: goal.title,
-			user_id: UsersService.getUserId(),
-			date: DatesService.getToday(),
-			completed: 0			
-		};
-
-		console.log(todo);
-
-		$http.post(MoleskinApp.url + 'todos', todo)
-			.success(function(data) {
-				console.log("moved goal to todo!");	
-			})
-			.error(function(status) {
-				alert(status);				
-			});	
-
-		for(var i=0;i<$scope.goals.length;i++) 
-		{
-			if($scope.goals[i].id == goal.id) 
-			{
-				$scope.goals.current_goal = 1;
-			}
-		}
-	}
-
+	$scope.updatePushed = function(goal) {
+		goal.pushed = goal.pushed ? false : true;
+		$scope.updateGoal(goal);
+	},
+	
 	addGoalToList = function(goal) {		
 		$scope.goals.push(goal);
 	},
@@ -93,7 +75,7 @@ MoleskinApp.controller('goalsController', function ($scope, $http, UsersService,
 		}
 	},
 
-	$scope.completeGoal = function(goal) {
+	$scope.updateCompleted = function(goal) {
 		
 		goal.completed = goal.completed ? false : true;
 

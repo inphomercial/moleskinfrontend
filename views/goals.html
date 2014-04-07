@@ -27,6 +27,8 @@
 						<tr>
 							<th>Goal</th>
 							<th>Due Date</th>
+							<th>Actionables</th>							
+							<th>Pushed</th>
 							<th>Completed</th>							
 						</tr>
 					</thead>
@@ -43,17 +45,32 @@
 								{{ goal.due_date }}
 							</td>
 							<td>
+								<span editable-text="goal.actionable_completed"
+									  onaftersave="updateGoal(goal)">
+									  {{ goal.actionable_completed }}
+								</span>
+								/
+								<span editable-text="goal.actionable_total"
+									  onaftersave="updateGoal(goal)">
+									  {{ goal.actionable_total }}
+								</span>
+							</td>
+							<td>
+							{{ goal.pushed }}
+							</td>
+							<td>								
 								<input type="checkbox" 
 									ng-true-value="1" 
 									ng-false-value="0" 
 									ng-checked="goal.completed" 																	
-									ng-click="completeGoal(goal)">
+									ng-click="updateCompleted(goal)">
 							</td>							
 							<td>
 								<button type="button" class="btn btn-danger" ng-click="deleteGoal(goal, $index)"> <i class="fa fa-trash-o"></i> </button>
 							</td>
 							<td>
-								<button type="button" class="btn btn-success" ng-click="pushToTodo(goal)"> <i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i> </button>
+								<button type="button" class="btn btn-success" ng-click="updatePushed(goal)"> <i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i> </button>
+								<!-- <button type="button" class="btn btn-success" ng-click="pushToTodo(goal)"> <i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i> </button> -->
 							</td>
 						</tr>
 					</tbody>
@@ -72,6 +89,10 @@
 				<div class="form-group">
 					<!-- <label for="goal_title">Goal Title</label> -->
 				    <input type="text" class="form-control" id="goal_title" ng-model="new_goal_title" placeholder="Enter Goal">
+				</div>
+				<div class="form-group">
+				    <!-- <label for="goal_due_date">Due Date</label> -->
+				    <input type="text" class="form-control" id="new_goal_actionable_total" ng-model="new_goal_actionable_total" placeholder="4">
 				</div>
 				<div class="form-group">
 				    <!-- <label for="goal_due_date">Due Date</label> -->

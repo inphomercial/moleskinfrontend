@@ -1,10 +1,24 @@
-MoleskinApp.controller('todosController', function ($scope, $http, $location, UsersService, DatesService) {
+MoleskinApp.controller('todosController', ['$scope', '$http', '$location', 'UsersService', 'DatesService', 'TodosService', function ($scope, $http, $location, UsersService, DatesService, TodosService) {
+
 	
 	// First check if user is logged in
 	//UsersService.isLoggedIn();
 
 	// Create our todos container
-	$scope.todos = {},
+	$scope.todos = [], 
+	$scope.current_position = DatesService.getToday();
+	$scope.current_position_fancy = DatesService.getTodayFancy();
+
+	// Get first set of todos
+	getTodos(DatesService.getToday());
+
+	function getTodos(date) {
+		TodosService.getTodos(date).then(function(data) {
+			console.log(data);
+		});
+		//$scope.todos = TodosService.getTodos(date);
+	}
+	/*
 	$scope.current_position = DatesService.getToday();
 	$scope.current_position_fancy = DatesService.getTodayFancy();
 
@@ -12,13 +26,36 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 	$http.get(MoleskinApp.url + 'todos/' + DatesService.getToday())
 		.success(function(todos) {
 			$scope.todos = todos;
-			console.log(todos);
 		})
 		.error(function(status) {
 			alert(status);
+		});*/
+/*
+	$scope.todos = TodosService.getTodos()
+		.then(function(result) {
+			console.log(result);
 		});
 
-    $scope.decrementDate = function() {
+	console.log($scope.todos);*/
+/*
+	$scope.$on('todos.add', function( event ) {
+		$scope.todos = TodosService.todos;
+	});
+
+	$scope.todos = TodosService.todos;*/
+
+	$scope.add = function()
+	{
+		var todo = {
+			title: "AYYYYY",
+			goal_id: 4,
+			completed: 0
+		}
+
+		TodosService.addTodo(todo);
+	},
+
+	$scope.decrementDate = function() {
 
     	DatesService.decrementDatePosition();
     	$scope.current_position = DatesService.getToday();
@@ -55,13 +92,9 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 			completed: 0,
 			pushed_times: 0
 		};
-
-		console.log(todo);
 		
 		$http.post(MoleskinApp.url + 'todos', todo)
 			.success(function(data) {
-
-				console.log(data);
 				
 				// Need to update the todo with what the server returned
 				// So I can give it the mysql id
@@ -118,6 +151,7 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 	}
 
 	$scope.updateTodo = function(todo) {
+
 		$http.put(MoleskinApp.url + 'todos/' + todo.id, todo)
 			.success(function(data) {	
 				//return true;			
@@ -133,30 +167,4 @@ MoleskinApp.controller('todosController', function ($scope, $http, $location, Us
 			return "Title cannot be blank!";
 		}		
 	}
-
-/*	$scope.checkDueDate = function(data) {	
-		if( data == "" )
-		{
-			return false;
-		}
-	},
-
-/*	$scope.completeTodo = function(todo) {
-		
-		goal.completed = goal.completed ? false : true;
-
-		$scope.updateGoal(goal);
- 	},*/
-/*
-	$scope.updateTodo = function(goal) {
-			
-		$http.put(MoleskinApp.url + 'todos/' + goal.id, goal)
-			.success(function(data) {
-				console.log("goal updated");
-			})
-			.error(function(status) {
-				alert(status);
-			})
-	},*/
-	
-});
+}]);

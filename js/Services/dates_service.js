@@ -25,7 +25,7 @@ MoleskinApp.factory('DatesService', function($http, $location) {
             {
                 var y = moment().get('year');
                 var m = moment().get('month')+1;
-                var d = moment().get('day')-1;
+                var d = moment().get('date')-1;
 
                 var date = y + "-" + m + "-" + d;
 
@@ -48,28 +48,6 @@ MoleskinApp.factory('DatesService', function($http, $location) {
             
             return moment(m).format("YYYY-MM-DD");           
         }
-
-        /*getToday: function() {
-
-            var y = moment().get('year');
-            var m = moment().get('month')+1;
-            var d = moment().get('day')-1;
-
-            var date = y + "-" + m + "-" + d;
-
-             return DatesService.today = moment(date).format("YYYY-MM-DD");
-        },
-        */
-        /*getYesterday: function() {
-
-            var y = moment().get('year');
-            var m = moment().get('month')+1;
-            var d = moment().get('day')-2;
-
-            var date = y + "-" + m + "-" + d;
-
-            return DatesService.yesterday = moment(date).format("YYYY-MM-DD");
-        },*/
     };
 
     return DatesService;

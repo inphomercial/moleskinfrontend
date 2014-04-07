@@ -1,4 +1,69 @@
 
+<div ng-controller="goalsWeeklyController">
+
+	<div class="row">
+		<div class="col-xs-4"></div>
+		<div class="col-xs-3">
+		<span ng-click="add()"> Click me! </span>
+
+			<table class="table table-condensed">
+				<tbody>
+					<tr ng-repeat="goal in goals">
+						<td>
+							<span>{{ goal.todo_id }}</span>
+						</td>
+						<td>
+							<span>{{ goal.title }}</span>
+						</td>
+						<td>
+							<span ng-switch="goal.completed">
+								<span ng-switch-when="0">
+									<i class="fa fa-square-o"></i>
+								</span>
+								<span ng-switch-default>
+									<i class="fa fa-square"></i>
+								</span>
+							</span>
+						</td>
+						<td>
+							<span ng-switch="goal.pushed">
+								<span ng-switch-when="true">
+									<i class="fa fa-chevron-circle-down"></i>
+								</span>
+								<span ng-switch-default>
+									<i class="fa fa-chevron-down"></i>
+								</span>
+							</span>
+						</td>
+						<td>
+							<span ng-click="pushToTodo(goal)"><i class="fa fa-caret-square-o-right"></i></span>
+						</td>
+					<!-- 	<td>
+							<span>{{ goal_weekly.completed }} / {{ goal_weekly.total }}</span>
+						</td> -->
+						<!-- <td>
+							<span ng-repeat="todo in goal">
+								<span>{{ todo }}</span> -->
+								<!-- <span ng-switch="todo.completed">
+									<span ng-switch-when="1">
+										<i class="fa fa-square"></i>
+									</span>
+									<span ng-switch-default>
+										<i class="fa fa-square-o"></i>
+									</span>
+								</span> -->
+						<!-- 	</span>
+						</td> -->
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+
+</div>
+
+
 <div ng-controller="todosController">
 
 	<div class="row">
@@ -7,16 +72,10 @@
 	    	<span ng-click="decrementDate()"><i class="fa fa-chevron-left fa-2x"></i></span>
 	    </div>
 	    <div class="col-xs-2">	
-	    	<!-- <button class="btn btn-primary" ng-click="decrementDate()"><i class="fa fa-backward"></i></button> -->
-	    <!-- </div>
-	    <div class="col-xs-2"> -->
 	    	<h3 style="display: inline">{{   current_position_fancy   }}</h3>
 	    </div>
 	    <div class="col-xs-5">
-	    <!-- </div>
-	   	<div class="col-xs-5"> -->
 	   		<span ng-click="incrementDate()">&nbsp;&nbsp;<i class="fa fa-chevron-right fa-2x"></i> </span>			
-	    	<!-- <button class="btn btn-primary" ng-click="incrementDate()"><i class="fa fa-forward"></i></button>    	  -->
 	   	</div>
 	</div>
 
@@ -25,6 +84,7 @@
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
+			<span ng-click="add()">click</span>
 			<span ng-hide="todos.length > 0">
 				<br>
 				<strong>No todos for the day, try adding some!</strong>

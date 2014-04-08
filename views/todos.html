@@ -4,53 +4,35 @@
 	<div class="row">
 		<div class="col-xs-4"></div>
 		<div class="col-xs-3">	
+		<h4>Weekly Goals</h4>
 			<table class="table table-condensed">
 				<tbody>
-					<tr ng-repeat="goal in goals_pushed">						
+					<tr ng-repeat="goal in goals_pushed">	
+
+						<!-- Cross off the title if the goal is completed -->					
 						<td>
 							<span ng-show="goal.actionable_completed < goal.actionable_total">{{ goal.title }}</span>
 							<span ng-show="goal.actionable_completed >= goal.actionable_total"><strike>{{ goal.title }}</strike></span>
-						</td>								
+						</td>
+
+						<!-- Used to show the due date if there is one, otherwise blank -->
+						<td ng-if="goal.due_date">
+							<span>{{ goal.due_date }}</span>
+						</td>	
+						<td ng-if="!goal.due_date">
+							<span></span>
+						</td>
+
+						<!-- Completed / Total display -->
 						<td>
 							<span>{{ goal.actionable_completed }} / {{ goal.actionable_total }}</span>
 						</td>
+						
+						<!-- Shows a button to create a todo if not complete, otherwise a check box that's unclickable -->						
 						<td>
 							<span ng-show="goal.actionable_completed < goal.actionable_total" ng-click="createTodoFromGoal(goal)"><i class="fa fa-caret-square-o-down"></i></span>
 							<span ng-show="goal.actionable_completed >= goal.actionable_total"><i class="fa fa-check-square"></i></span>
-						</td>
-						<!-- <td>
-							<span ng-switch="goal.completed">
-								<span ng-switch-when="0">
-									<i class="fa fa-square-o"></i>
-								</span>
-								<span ng-switch-default>
-									<i class="fa fa-square"></i>
-								</span>
-							</span>
-						</td> -->
-						<!-- <td>
-							<span ng-switch="goal.pushed">
-								<span ng-switch-when="true">
-									<i class="fa fa-chevron-circle-down"></i>
-								</span>
-								<span ng-switch-default>
-									<i class="fa fa-chevron-down"></i>
-								</span>
-							</span>
-						</td> -->			
-						<!-- <td>
-							<span ng-repeat="todo in goal">
-								<span>{{ todo }}</span>
-								<span ng-switch="todo.completed">
-									<span ng-switch-when="1">
-										<i class="fa fa-square"></i>
-									</span>
-									<span ng-switch-default>
-										<i class="fa fa-square-o"></i>
-									</span>
-								</span>
-							</span>
-						</td> -->
+						</td>				
 					</tr>
 				</tbody>
 			</table>
@@ -79,15 +61,14 @@
  
 	<div class="row">
 		<div class="col-xs-3"></div>
-		<div class="col-xs-6">
-			<!-- <span ng-click="add()">click</span> -->
+		<div class="col-xs-6">			
 			<span ng-hide="todos.length > 0">
 				<br>
 				<strong>No todos for the day, try adding some!</strong>
 			</span>
 			<span ng-show="todos.length > 0">
 				<div class="table-responsive">
-					<table class="table table-striped table-condensed">
+					<table class="table table-condensed">
 						<thead>
 							<tr>	
 								<th class="col-sm-1"></th>						
@@ -104,18 +85,29 @@
 								</td>
 								<td ng-switch on="todo.completed">
 								 	<span style="color:gray; text-decoration:line-through" ng-switch-when="1">
-								    	<strong>{{ todo.title }}</strong>
+								    	  <strong>{{ todo.title }}</strong>								    	  
 								   	</span>
 								   	<span ng-switch-default 
 								   		  editable-text="todo.title"
 										  onbeforesave="checkTitle($data)"
 										  onaftersave="updateTodo(todo)">
-								    <strong>{{ todo.title }}</strong>
+								    	  <strong>{{ todo.title }}</strong>
 								   	</span>
 								</td>																		
+
+								<!-- Used to display some indicator that the todo is part of a Goal -->
+								<td ng-if="todo.goal_id" class="bg-success">									
+									<span>&nbsp;&nbsp;</span>
+								</td>
+								<td ng-if="!todo.goal_id">									
+									<span>&nbsp;&nbsp;</span>
+								</td>
+
+								<!-- Number of times a todo has been pushed -->
 								<td>
 									<span class="badge">{{ todo.pushed_times }}</span>		
 								</td>
+
 								<td>																				
 									<span ng-switch on="todo.completed">
 										<span ng-switch-when="1" ng-click="completeTodo(todo)"><i class="fa fa-check-square-o fa-2x"></i> </span>								

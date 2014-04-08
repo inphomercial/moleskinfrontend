@@ -45,33 +45,39 @@
 								{{ goal.due_date }}
 							</td>
 							<td>
-								<span editable-text="goal.actionable_completed"
+								<span editable-number="goal.actionable_completed"
+									  onbeforesave="checkActionableCompleted($data)"
 									  onaftersave="updateGoal(goal)">
 									  {{ goal.actionable_completed }}
 								</span>
 								/
-								<span editable-text="goal.actionable_total"
+								<span editable-number="goal.actionable_total"
+									  onbeforesave="checkActionableTotal($data)"
 									  onaftersave="updateGoal(goal)">
 									  {{ goal.actionable_total }}
 								</span>
 							</td>
 							<td>
-							{{ goal.pushed }}
+								{{ goal.pushed }}
 							</td>
 							<td>
-							{{ goal.completed }}								
-								<!-- <input type="checkbox" 
-									ng-true-value="1" 
-									ng-false-value="0" 
-									ng-checked="goal.completed" 																	
-									ng-click="updateCompleted(goal)"> -->
+								{{ goal.completed }}															
 							</td>							
 							<td>
-								<button type="button" class="btn btn-danger" ng-click="deleteGoal(goal, $index)"> <i class="fa fa-trash-o"></i> </button>
+								<button type="button" class="btn btn-danger" ng-click="deleteGoal(goal)"> <i class="fa fa-trash-o"></i> </button>
 							</td>
+
+							<!-- i want to show > if !complete and not pushed, << if pushed & !complete, a Check if completed -->
 							<td>
-								<button type="button" class="btn btn-success" ng-click="updatePushed(goal)"> <i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i> </button>
-								<!-- <button type="button" class="btn btn-success" ng-click="pushToTodo(goal)"> <i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i> </button> -->
+								<button ng-if="goal.completed"  type="button" class="btn btn-success" disabled="disabled">
+									<i class="fa fa-check"></i>
+								</button>
+								<button ng-if="!goal.completed && goal.pushed" ng-if="goal.pushed" type="button" class="btn btn-success" ng-click="pushGoal(goal)">
+									</i><i class="fa fa-chevron-left"></i>
+								</button>	
+								<button ng-if="!goal.completed && !goal.pushed" type="button" class="btn btn-success" ng-click="pushGoal(goal)">
+									</i><i class="fa fa-chevron-right"></i>
+								</button>							
 							</td>
 						</tr>
 					</tbody>
@@ -86,7 +92,7 @@
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
-			<form class="form-inline" role="form" ng-submit="addGoal()">
+			<form class="form-inline" role="form" ng-submit="createGoal()">
 				<div class="form-group">
 					<!-- <label for="goal_title">Goal Title</label> -->
 				    <input type="text" class="form-control" id="goal_title" ng-model="new_goal_title" placeholder="Enter Goal">

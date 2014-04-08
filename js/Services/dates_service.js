@@ -25,7 +25,8 @@ MoleskinApp.factory('DatesService', function($http, $location) {
             {
                 var y = moment().get('year');
                 var m = moment().get('month')+1;
-                var d = moment().get('date')-1;
+                //var d = moment().get('date')-1;
+                var d = moment().get('date');
 
                 var date = y + "-" + m + "-" + d;
 

@@ -15,8 +15,6 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
               .error(function(status) {
                   alert(status);
               });
-
-            console.log(huk);
       },
 
        getPushedGoals: function() {
@@ -28,21 +26,19 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
               .error(function(status) {
                   alert(status);
               });
-
-            console.log(huk);
       },
 
       updateGoal: function( goal ) {
-        
-        console.log(goal);
 
         $http.put(MoleskinApp.url + 'goals/' + goal.id, goal)
-            .success(function(data) { 
-              //return true;      
-            })
-            .error(function(status) {
-              alert(status);
-            })
+          .success(function(data) {
+            console.log("goal updated");
+          })
+          .error(function(status) {
+            alert(status);
+          })
+        
+
       },
 
       getPushedGoal: function( goal_id )
@@ -56,9 +52,41 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
         }
       },
 
-      addGoal: function( goal ) {
-          GoalsService.goals_pushed.push( goal );
-          $rootScope.$emit( 'goals.update' );
+      deleteGoal: function( goal ) {
+
+        $http.delete(MoleskinApp.url + 'goals/' + goal.id)
+          .success(function(data) {
+            for(var i=0;i<GoalsService.goals.length;i++) 
+            {
+              if(GoalsService.goals[i].id == goal.id)
+              {           
+                GoalsService.goals.splice(i, 1);
+                $rootScope.$emit( 'goals.update' );
+              }
+            }
+          })
+          .error(function(status) {
+            alert(status);
+          })
+
+          /*$rootScope.$emit( 'goals.update' );*/
+      },
+
+      createGoal: function( goal ) {
+        $http.post(MoleskinApp.url + 'goals', goal)
+          .success(function(data) {
+
+            // Need to update the goal with what the server returned
+            // So I can give it the mysql id
+            goal.id = data.id;
+            GoalsService.goals.push(goal);      
+            $rootScope.$emit( 'goals.update' );
+          })
+          .error(function(status) {
+            alert(status);        
+          }); 
+          
+          /*$rootScope.$emit( 'goals.update' );*/
       } 
 
     };

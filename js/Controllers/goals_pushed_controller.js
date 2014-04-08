@@ -10,8 +10,6 @@ MoleskinApp.controller('goalsPushedController', function ($scope, $http, UsersSe
 		$scope.goals_pushed = GoalsService.goals_pushed;	
 	})
 
-	console.log($scope.goals_pushed);
-
 	/*$scope.amICompleted = function(goal) {
 		if(goal.actionable_completed >= goal.actionable_total)
 		{

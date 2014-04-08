@@ -3,23 +3,20 @@
 
 	<div class="row">
 		<div class="col-xs-4"></div>
-		<div class="col-xs-3">
-		<span ng-click="add()"> Click me! </span>
-
+		<div class="col-xs-3">	
 			<table class="table table-condensed">
 				<tbody>
-					<tr ng-repeat="goal in goals_pushed">
+					<tr ng-repeat="goal in goals_pushed">						
 						<td>
-							<span>{{ goal.id }}</span>
-						</td>
-						<td>
-							<span>{{ goal.title }}</span>
+							<span ng-show="goal.actionable_completed < goal.actionable_total">{{ goal.title }}</span>
+							<span ng-show="goal.actionable_completed >= goal.actionable_total"><strike>{{ goal.title }}</strike></span>
 						</td>								
 						<td>
 							<span>{{ goal.actionable_completed }} / {{ goal.actionable_total }}</span>
 						</td>
 						<td>
-							<span ng-click="createTodoFromGoal(goal)"><i class="fa fa-caret-square-o-right"></i></span>
+							<span ng-show="goal.actionable_completed < goal.actionable_total" ng-click="createTodoFromGoal(goal)"><i class="fa fa-caret-square-o-down"></i></span>
+							<span ng-show="goal.actionable_completed >= goal.actionable_total"><i class="fa fa-check-square"></i></span>
 						</td>
 						<!-- <td>
 							<span ng-switch="goal.completed">

@@ -58,12 +58,13 @@
 							<td>
 							{{ goal.pushed }}
 							</td>
-							<td>								
-								<input type="checkbox" 
+							<td>
+							{{ goal.completed }}								
+								<!-- <input type="checkbox" 
 									ng-true-value="1" 
 									ng-false-value="0" 
 									ng-checked="goal.completed" 																	
-									ng-click="updateCompleted(goal)">
+									ng-click="updateCompleted(goal)"> -->
 							</td>							
 							<td>
 								<button type="button" class="btn btn-danger" ng-click="deleteGoal(goal, $index)"> <i class="fa fa-trash-o"></i> </button>

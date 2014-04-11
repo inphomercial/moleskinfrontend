@@ -16,25 +16,17 @@
     <div class="row">
         <div class="col-xs-3"></div>
         <div class="col-xs-6">
-            <ol class="breadcrumb">
-                <li><a href="#login"><i class="fa fa-home"></i> Login</a></li>
+            <ul class="nav nav-pills">
+               <li><a href="#login"><i class="fa fa-home"></i> Login</a></li>
                 <li><a href="#todos"><i class="fa fa-check-square"></i> Todos</a></li>
                 <li><a href="#goals"><i class="fa fa-list fa-rotate-180"></i> Goals</a></li>                
-                <li>
-                    <span ng-controller="usersController">                    
-                        <a href="#" ng-click="logout()">Log Out</a>
-                    </span>
-                </li>
-            </ol>
-        </div>
+                <li><a ng-controller="usersController" href="#" ng-click="logout()">Log Out</a></li>
+            </ul>
         <div class="col-xs-3"></div>
-        <!-- <div ng-controller="usersController" class="col-xs-3">                    
-            <div><a href="#" ng-click="logout()" class="button small">Log Out</a></div>
-        </div> -->
     </div>
    
     <div class="row">
-        <div class="small-12 columns">
+        <div class="col-xs-12">
 	       <div ng-view></div>
         </div>
     </div>

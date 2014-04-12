@@ -1,7 +1,7 @@
-MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, GoalsService) {
+MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, UsersService, GoalsService) {
 	
 	// First check if user is logged in
-	//UsersService.isLoggedIn();
+	UsersService.isLoggedIn();
 
 	// Create our goals container
 	$scope.goals = [];

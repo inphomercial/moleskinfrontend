@@ -1,7 +1,7 @@
 MoleskinApp.controller('todosController', function ($scope, $rootScope, $http, $location, UsersService, TodosService, DatesService) {
 
 	// First check if user is logged in
-	//UsersService.isLoggedIn();
+	UsersService.isLoggedIn();
 
 	// Create our todos container
 	$scope.todos = [], 	

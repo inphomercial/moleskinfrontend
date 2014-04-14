@@ -13,7 +13,7 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
                   console.log("got todos" + todos);
               })
               .error(function(status) {
-                  alert(status);
+                  console.log(status);
               });            
         },
       
@@ -27,7 +27,7 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
                 TodosService.todos.push(todo);                
             })
             .error(function(status) {
-                alert(status);              
+                console.log(status);              
             }); 
           
           $rootScope.$emit( 'todos.update' );
@@ -47,7 +47,7 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
                 $rootScope.$emit( 'todos.update' );
             })
             .error(function(status) {
-                alert(status);
+                console.log(status);
             })
         },
 
@@ -132,7 +132,7 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
                     
                 })
                 .error(function(status) {
-                    alert(status);
+                    console.log(status);
                 })
         }
 

@@ -1,5 +1,8 @@
 MoleskinApp.controller('goalsPushedController', function ($scope, $http, UsersService, DatesService, TodosService, GoalsService) {
-	
+		
+	// First check if user is logged in
+	UsersService.isLoggedIn();
+
 	$scope.$on('goals_pushed.update', function( event ) {
 		$scope.goals_pushed = GoalsService.goals_pushed;
 	});

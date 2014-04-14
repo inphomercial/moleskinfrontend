@@ -13,7 +13,7 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
                   GoalsService.goals = goals;
               })
               .error(function(status) {
-                  alert(status);
+                  console.log(status);
               });
       },
 
@@ -24,7 +24,7 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
                   GoalsService.goals_pushed = goals_pushed;
               })
               .error(function(status) {
-                  alert(status);
+                  console.log(status);
               });
       },
 
@@ -35,7 +35,7 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
             console.log("goal updated");
           })
           .error(function(status) {
-            alert(status);
+            console.log(status);
           })
         
 
@@ -66,7 +66,7 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
             }
           })
           .error(function(status) {
-            alert(status);
+            console.log(status);
           })
 
           /*$rootScope.$emit( 'goals.update' );*/
@@ -83,7 +83,7 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
             $rootScope.$emit( 'goals.update' );
           })
           .error(function(status) {
-            alert(status);        
+            console.log(status);        
           }); 
           
           /*$rootScope.$emit( 'goals.update' );*/

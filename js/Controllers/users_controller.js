@@ -1,4 +1,4 @@
-MoleskinApp.controller('usersController', function ($scope, $http, $location, UsersService) {
+MoleskinApp.controller('usersController', function ($scope, $http, $location, localStorageService, UsersService) {
 	
 	$scope.login = function() {
 
@@ -10,9 +10,15 @@ MoleskinApp.controller('usersController', function ($scope, $http, $location, Us
 		$http.post(MoleskinApp.url + 'login', user)
 			.success(function(data) 
 			{	
-				UsersService.user_id  = data.user_id;							
-				UsersService.email    = user.email;
-				UsersService.isLogged = true;
+				//console.log(data);
+				UsersService.user_id      = data.user_id;							
+				UsersService.email        = user.email;
+				UsersService.is_logged_in = true;
+
+				// Start fresh
+    			localStorageService.clearAll();
+    			localStorageService.add('user_id', data.user_id);
+    			localStorageService.add('email', user.email);
 							
 				$location.path('/todos');
 			})
@@ -28,15 +34,18 @@ MoleskinApp.controller('usersController', function ($scope, $http, $location, Us
 		$http.get(MoleskinApp.url + 'logout')
 			.success(function(data) 
 			{				
+				// Start fresh
+    			localStorageService.clearAll();
+
 				$location.path('/login');	
 			})
 			.error(function(status) 
 			{
 				alert(status);
 			})
-	},
+	}
 
-	$scope.basicAuthLogin = function() {
+	/*$scope.basicAuthLogin = function() {
    		
 		var user = {
 					email: $scope.user.email,
@@ -45,7 +54,7 @@ MoleskinApp.controller('usersController', function ($scope, $http, $location, Us
 
 		$http.defaults.headers.post.Authorization = 'Basic ' + Base64.encode(user.email + ':' + user.password);
 		//$http.post(MoleskinApp.url + 'authlogin', user)
-		$http.post(MoleskinApp.url + 'authlogin')
+		//$http.post(MoleskinApp.url + 'authlogin')
 			.success(function(data) 
 			{	
 				UsersService.user_id  = data.user_id;							
@@ -61,7 +70,7 @@ MoleskinApp.controller('usersController', function ($scope, $http, $location, Us
 				console.log($http.defaults.headers);
 				/*UsersService.email    = "";
 				UsersService.isLogged = false;*/
-			})		
+		/*	})		
 	}
-	
+	*/
 });

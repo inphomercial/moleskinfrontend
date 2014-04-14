@@ -1,4 +1,4 @@
-var MoleskinApp = angular.module('MoleskinApp', ['ngRoute', 'xeditable']);
+var MoleskinApp = angular.module('MoleskinApp', ['ngRoute', 'xeditable', 'LocalStorageModule']);
 
 // Used to theme the editable fields
 MoleskinApp.run(function(editableOptions) {

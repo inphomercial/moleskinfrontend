@@ -1,5 +1,8 @@
 MoleskinApp.controller('goalsWeeklyController', function ($scope, $http, UsersService, DatesService, GoalsService) {
-	
+
+	// First check if user is logged in
+	UsersService.isLoggedIn();
+
 	$scope.$on('goals.update', function( event ) {
 		$scope.goals = GoalsService.goals;
 	});

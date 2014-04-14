@@ -1,14 +1,34 @@
-MoleskinApp.factory('UsersService', function($http, $location) {
+MoleskinApp.factory('UsersService', function($http, $location, localStorageService) {
     
     var UsersService = {
 
         email: null,
         user_id: null,
-        isLogged: false,
+        is_logged_in: false,
+
+        setUserDataFromStorage: function() {
+
+            UsersService.email = localStorageService.get('email');
+            UsersService.user_id = localStorageService.get('user_id');
+
+            console.log(UsersService.email);
+            console.log(UsersService.user_id);
+
+            if(UsersService.email && UsersService.user_id)
+            {
+                UsersService.is_logged_in = true;
+            }
+            else
+            {
+                UsersService.is_logged_in = false;
+            }
+        },
 
         isLoggedIn: function() {
 
-            if(UsersService.isLogged)
+            UsersService.setUserDataFromStorage();
+
+            if(UsersService.is_logged_in)
             {
                 return true;            
             }

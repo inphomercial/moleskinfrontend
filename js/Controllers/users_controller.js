@@ -12,7 +12,7 @@ MoleskinApp.controller('usersController', function ($scope, $http, $location, lo
 			{	
 				// Set servers returned user_id				
 				UsersService.user_id      = data.user_id;							
-				UsersService.email        = user.email;
+				UsersService.email 		  = user.email;
 				UsersService.is_logged_in = true;
 
 				// Start fresh

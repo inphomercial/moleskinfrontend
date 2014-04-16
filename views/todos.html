@@ -91,7 +91,7 @@
 			<span ng-show="todos.length > 0">
 				<div class="table-responsive">
 					<table class="table table-condensed">
-						<thead>
+						<!-- <thead>
 							<tr>	
 								<th class="col-sm-1"></th>						
 								<th class="col-sm-7"></th>																													
@@ -99,7 +99,7 @@
 								<th class="col-sm-1"></th>
 								<th class="col-sm-1"></th>	
 							</tr>
-						</thead>
+						</thead> -->
 						<tbody>
 							<tr ng-repeat="todo in todos | filter:search | orderBy:'completed'">
 								<td>
@@ -118,8 +118,8 @@
 								</td>																		
 
 								<!-- Used to display some indicator that the todo is part of a Goal -->
-								<td ng-if="todo.goal_id" class="bg-success">									
-									<span>&nbsp;&nbsp;</span>
+								<td ng-if="todo.goal_id">									
+									<span><i class="fa fa-sort-amount-desc fa-flip-vertical"></i></span>
 								</td>
 								<td ng-if="!todo.goal_id">									
 									<span>&nbsp;&nbsp;</span>
@@ -168,14 +168,5 @@
 		</div>
 		<div class="col-xs-3"></div>
 	</div>
-</div>
+</div>		
 
-	<br>
-
-	<div class="row">
-		<div class="col-xs-3"></div>
-		<div class="col-xs-4">			
-			<?php echo Session::get('email'); ?>
-		</div>		
-	</div>			
-</div>

@@ -35,21 +35,19 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
             console.log("goal updated");
           })
           .error(function(status) {
-            console.log(status);
+              console.log(status);
           })
-        
-
       },
 
       getPushedGoal: function( goal_id )
       {        
-        for(var i=0; i<GoalsService.goals_pushed.length; i++)
-        {
-          if(GoalsService.goals_pushed[i].id == goal_id)
-          {            
-            return GoalsService.goals_pushed[i];
+          for(var i=0; i<GoalsService.goals_pushed.length; i++)
+          {
+              if(GoalsService.goals_pushed[i].id == goal_id)
+              {            
+                  return GoalsService.goals_pushed[i];
+              }
           }
-        }
       },
 
       deleteGoal: function( goal ) {
@@ -68,8 +66,6 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
           .error(function(status) {
             console.log(status);
           })
-
-          /*$rootScope.$emit( 'goals.update' );*/
       },
 
       createGoal: function( goal ) {
@@ -85,8 +81,6 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
           .error(function(status) {
             console.log(status);        
           }); 
-          
-          /*$rootScope.$emit( 'goals.update' );*/
       } 
 
     };

@@ -3,6 +3,9 @@ MoleskinApp.controller('goalsPushedController', function ($scope, $http, UsersSe
 	// First check if user is logged in
 	UsersService.isLoggedIn();
 
+	// Create our goals_pushed container
+	$scope.goals_pushed = [];
+
 	$scope.$on('goals_pushed.update', function( event ) {
 		$scope.goals_pushed = GoalsService.goals_pushed;
 	});
@@ -12,13 +15,6 @@ MoleskinApp.controller('goalsPushedController', function ($scope, $http, UsersSe
 	r.then(function (res) {
 		$scope.goals_pushed = GoalsService.goals_pushed;	
 	})
-
-	/*$scope.amICompleted = function(goal) {
-		if(goal.actionable_completed >= goal.actionable_total)
-		{
-			return "Complete";
-		}
-	}*/
 
 	$scope.createTodoFromGoal = function(goal) {
 		

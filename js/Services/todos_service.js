@@ -9,8 +9,7 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
 
         return $http.get(MoleskinApp.url + 'todos/' + date)
               .success(function(todos) {
-                  TodosService.todos = todos;
-                  console.log("got todos" + todos);
+                  TodosService.todos = todos;                  
               })
               .error(function(status) {
                   console.log(status);

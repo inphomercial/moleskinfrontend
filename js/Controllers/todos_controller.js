@@ -16,9 +16,7 @@ MoleskinApp.controller('todosController', function ($scope, $rootScope, $http, $
 	r.then(function (res) {
 		$scope.todos = TodosService.todos;	
 	})
-
-	console.log(TodosService.todos.length);
-
+	
 	$scope.decrementDate = function() {
 
     	DatesService.decrementDatePosition();    	

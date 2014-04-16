@@ -14,6 +14,7 @@ MoleskinApp.config(['$routeProvider', function($routeProvider)
         templateUrl: 'views/todos.html'
       })
       .otherwise({
-        redirectTo: '/'
+        templateUrl: 'views/login.html'
+        /*redirectTo: 'views/login.html'*/
       });
   }]);

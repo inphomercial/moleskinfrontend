@@ -11,8 +11,8 @@ MoleskinApp.factory('UsersService', function($http, $location, localStorageServi
             UsersService.email = localStorageService.get('email');
             UsersService.user_id = localStorageService.get('user_id');
 
-            console.log(UsersService.email);
-            console.log(UsersService.user_id);
+            console.log("user email: " + UsersService.email);
+            console.log("user_id: " + UsersService.user_id);
 
             if(UsersService.email && UsersService.user_id)
             {

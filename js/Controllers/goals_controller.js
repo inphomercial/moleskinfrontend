@@ -85,20 +85,7 @@ MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, U
 
 	$scope.deleteGoal = function(goal) {
 
-		GoalsService.deleteGoal(goal);
-		/*$http.delete(MoleskinApp.url + 'goals/' + goal.id)
-			.success(function(data) {
-				console.log("goal deleted");
-
-				for(var i=0;i<$scope.goals.length;i++) {
-					if($scope.goals[i].id == goal.id) {						
-						$scope.goals.splice(i, 1);
-					}
-				}
-			})
-			.error(function(status) {
-				alert(status);
-			})*/
+		GoalsService.deleteGoal(goal);		
 	}
 	
 });

@@ -13,6 +13,9 @@ MoleskinApp.config(['$routeProvider', function($routeProvider)
       .when('/todos', {
         templateUrl: 'views/todos.html'
       })
+      .when('/changelog', {
+        templateUrl: 'views/changelog.html'
+      })
       .otherwise({
         templateUrl: 'views/login.html'
         /*redirectTo: 'views/login.html'*/

@@ -26,10 +26,6 @@ MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, U
 		return count;
 	},
 
-	$scope.datePicker = function() {
-		$('.datepicker').datepicker();
-	},
-
 	$scope.createGoal = function() {
 
 		var goal = { 		

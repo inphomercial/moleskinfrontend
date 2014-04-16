@@ -50,7 +50,21 @@ MoleskinApp.controller('usersController', function ($scope, $http, $location, lo
 	$scope.requestInvite = function() {
 
 		alertify.prompt("Please provide a email address :", function(e, str){		
-			console.log(str);		
+			
+			var invite = {
+				email: str
+			}
+
+			$http.post(MoleskinApp.url + 'invite', invite)
+			.success(function(data) 
+			{	
+				alertify.success("Request Sent!");
+			})
+			.error(function(status) 
+			{		
+				alertify.error("Request Failed");
+				console.log(status)	;				
+			})				
 		});
 
 		

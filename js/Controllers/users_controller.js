@@ -20,10 +20,11 @@ MoleskinApp.controller('usersController', function ($scope, $http, $location, lo
     			localStorageService.add('user_id', data.user_id);
     			localStorageService.add('email', user.email);
 							
-				$location.path('/todos');
+				$location.path('/todos');		
 			})
 			.error(function(status) 
 			{		
+				alertify.error("Login Failed");
 				console.log(status)	;				
 			})		
 	},
@@ -37,10 +38,21 @@ MoleskinApp.controller('usersController', function ($scope, $http, $location, lo
     			localStorageService.clearAll();
 
 				$location.path('/login');	
+
+				alertify.success("Logged Out");
 			})
 			.error(function(status) 
 			{
 				console.log(status);
 			})
+	},
+
+	$scope.requestInvite = function() {
+
+		alertify.prompt("Please provide a email address :", function(e, str){		
+			console.log(str);		
+		});
+
+		
 	}
 });

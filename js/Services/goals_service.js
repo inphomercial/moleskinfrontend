@@ -12,8 +12,8 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
               .success(function(goals) {
                   GoalsService.goals = goals;
               })
-              .error(function(status) {
-                  console.log(status);
+              .error(function(data) {
+                  alertify.error("Problem getting all goals : " + data.message);
               });
       },
 
@@ -23,9 +23,58 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
               .success(function(goals_pushed) {
                   GoalsService.goals_pushed = goals_pushed;
               })
-              .error(function(status) {
-                  console.log(status);
+              .error(function(data) {
+                  alertify.error("Problem getting pushed goals : " + data.message);
               });
+      },
+
+      incrementCompleted: function( goal_id )
+      {
+          var goal = GoalsService.getPushedGoal(goal_id);
+
+          // If the goal was deleted or completed before the todo was completed.
+          if(!goal)
+          {
+              return;
+          }
+
+          goal.actionable_completed++;
+
+          if(goal.actionable_completed >= goal.actionable_total)
+          {
+              goal.completed = 1;
+
+              // To prevent dupes from over completing goals
+              goal.actionable_completed = goal.actionable_total;
+          }
+
+          GoalsService.updateGoal(goal);          
+      },
+
+      decrementCompleted: function( goal_id )
+      {
+          var goal = GoalsService.getPushedGoal(goal_id);
+
+          // If the goal was deleted or completed before the todo was completed.
+          if(!goal)
+          {            
+              return;
+          }
+
+          goal.actionable_completed--;
+
+          if(goal.actionable_completed < goal.actionable_total)
+          { 
+              // To prevent Negative numbers
+              if(goal.actionable_completed < 0)
+              {
+                goal.actionable_completed = 0;
+              }
+
+              goal.completed = 0;
+          }
+
+          GoalsService.updateGoal(goal);          
       },
 
       updateGoal: function( goal ) {
@@ -34,8 +83,8 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
           .success(function(data) {
             console.log("goal updated");
           })
-          .error(function(status) {
-              console.log(status);
+          .error(function(data) {
+              alertify.error("Problem updating goal : " + data.message);
           })
       },
 
@@ -63,8 +112,8 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
               }
             }
           })
-          .error(function(status) {
-            console.log(status);
+          .error(function(data) {
+              alertify.error("Problem deleting goal : " + data.message);
           })
       },
 
@@ -78,8 +127,8 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
             GoalsService.goals.push(goal);      
             $rootScope.$emit( 'goals.update' );
           })
-          .error(function(status) {
-            console.log(status);        
+          .error(function(data) {
+            alertify.error("Problem creating goal : " + data.message);
           }); 
       } 
 

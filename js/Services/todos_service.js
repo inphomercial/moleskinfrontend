@@ -11,8 +11,8 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
               .success(function(todos) {
                   TodosService.todos = todos;                  
               })
-              .error(function(status) {
-                  console.log(status);
+              .error(function(data) {
+                  alertify.error("Problem getting todos by date : " + data.message);
               });            
         },
       
@@ -25,8 +25,8 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
                 todo.id = data.id;
                 TodosService.todos.push(todo);                
             })
-            .error(function(status) {
-                console.log(status);              
+            .error(function(data) {
+                alertify.error("Problem adding todo : " + data.message);         
             }); 
           
           $rootScope.$emit( 'todos.update' );
@@ -45,8 +45,8 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
 
                 $rootScope.$emit( 'todos.update' );
             })
-            .error(function(status) {
-                console.log(status);
+            .error(function(data) {
+               alertify.error("Problem deleting todo : " + data.message);
             })
         },
 
@@ -55,8 +55,9 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
             for(var i=0;i<TodosService.todos.length;i++) 
             {
                 if(TodosService.todos[i].id == todo.id) 
-                {                                     
-                    todo.completed = todo.completed ? 0 : 1;
+                {                   
+                    console.log("found todo");
+                    todo.completed = todo.completed ? 0 : 1;                    
                 }
             }
 
@@ -65,43 +66,17 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
             if(todo.completed == 1)
             {
                 if(todo.goal_id)
-                {
-                    var goal = GoalsService.getPushedGoal(todo.goal_id);
-
-                    // If the goal was deleted or completed before the todo was completed.
-                     if(!goal)
-                        return;
-
-                    goal.actionable_completed++;
-
-                    if(goal.actionable_completed >= goal.actionable_total)
-                    {
-                        goal.completed = 1;
-                    }
-
-                    GoalsService.updateGoal(goal);          
+                {                    
+                    GoalsService.incrementCompleted(todo.goal_id);
                 }   
             }
             else
-            {
+            {                
                 if(todo.goal_id)
                 {
-                    var goal = GoalsService.getPushedGoal(todo.goal_id);
-
-                    // If the goal was deleted or completed before the todo was completed.
-                    if(!goal)
-                        return;
-
-                    goal.actionable_completed--;
-
-                    if(goal.actionable_completed < goal.actionable_total)
-                    {
-                        goal.completed = 0;
-                    }
-
-                    GoalsService.updateGoal(goal);          
+                    GoalsService.decrementCompleted(todo.goal_id);            
                 }   
-            }
+            }           
 
             $rootScope.$emit( 'todos.update' );
         },
@@ -127,11 +102,10 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
         updateTodo: function( todo ) {
 
             $http.put(MoleskinApp.url + 'todos/' + todo.id, todo)
-                .success(function(data) {   
-                    
+                .success(function(data) {                       
                 })
-                .error(function(status) {
-                    console.log(status);
+                .error(function(data) {
+                    alertify.error("Problem updating todo : " + data.message);
                 })
         }
 

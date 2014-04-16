@@ -99,15 +99,25 @@
 				</div>
 				<div class="form-group">
 				    <!-- <label for="goal_due_date">Due Date</label> -->
-				    <input type="text" class="form-control" id="new_goal_actionable_total" ng-model="new_goal_actionable_total" placeholder="4">
+				    <input type="text" class="form-control" id="new_goal_actionable_total" ng-model="new_goal_actionable_total" placeholder="Times to complete">
 				</div>
-				<div class="form-group">
-				    <!-- <label for="goal_due_date">Due Date</label> -->
-				    <input type="text" class="form-control" id="goal_due_date" ng-model="new_goal_due_date" placeholder="2014-03-23">
-				</div>
-				<div class="form-group">					
-					<button type="submit" class="btn btn-default">Submit</button>
-				</div>
+				<div class="form-group">					   				       
+	                <input disabled="disabled"
+	                	   type="text" 
+	                	   id="goal_due_date" 
+	                	   ng-model="new_goal_due_date" 
+	                	   placeholder="2014-03-23"
+	               		   class="form-control" 
+	              		   datepicker-popup="{{format}}" 			              		   
+	              		   is-open="opened" 
+	              		   min="minDate" 
+	              		   max="'2017-06-22'" 
+	              		   date-disabled="disabled(date, mode)" 
+	              		   ng-required="true" 
+	              		   close-text="Close" />				            				          			       
+				</div>		
+				<br><br>							
+				<button type="submit" class="btn btn-default">Submit</button>				
 			</form>
 		</div>
 		<div class="col-xs-3"></div>

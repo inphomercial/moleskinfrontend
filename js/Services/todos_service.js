@@ -57,11 +57,12 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
                 if(TodosService.todos[i].id == todo.id) 
                 {                   
                     console.log("found todo");
-                    todo.completed = todo.completed ? 0 : 1;                    
+                    todo.completed = (todo.completed == 1) ? 0 : 1;                    
                 }
             }
 
             TodosService.updateTodo(todo);
+            $rootScope.$emit( 'todos.update' );
 
             if(todo.completed == 1)
             {
@@ -76,9 +77,7 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
                 {
                     GoalsService.decrementCompleted(todo.goal_id);            
                 }   
-            }           
-
-            $rootScope.$emit( 'todos.update' );
+            }                   
         },
 
         pushTodo: function( todo ) {

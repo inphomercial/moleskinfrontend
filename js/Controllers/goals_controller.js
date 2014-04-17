@@ -92,7 +92,7 @@ MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, $
 	},
 
 	$scope.statusIsCompleted = function(goal) {
-		if( goal.completed )
+		if( goal.completed == 1)
 		{
 			return true;
 		}
@@ -101,7 +101,7 @@ MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, $
 	},
 
 	$scope.statusIsNotCompletedAndNotPushed = function(goal) {
-		if( !goal.completed && !goal.pushed )
+		if( goal.completed == 0 && goal.pushed == 0)
 		{
 			return true;
 		}
@@ -110,7 +110,7 @@ MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, $
 	}
 
 	$scope.statusIsNotCompletedAndPushed = function(goal) {
-		if( !goal.completed && goal.pushed )
+		if( goal.completed == 0 && goal.pushed == 1)
 		{
 			return true;
 		}

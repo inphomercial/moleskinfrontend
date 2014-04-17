@@ -20,7 +20,7 @@ MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, U
 		var count = 0;
 
 		angular.forEach($scope.goals, function(goal) {
-			count += goal.completed ? 0 : 1;
+			count += (goal.completed == 1) ? 0 : 1;
 		});
 
 		return count;
@@ -46,7 +46,7 @@ MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, U
 
 	$scope.pushGoal = function(goal) {
 
-		goal.pushed = goal.pushed ? 0 : 1;
+		goal.pushed = (goal.pushed == 1) ? 0 : 1;
 		GoalsService.updateGoal(goal);		
 	},
 

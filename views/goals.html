@@ -68,11 +68,12 @@
 							</td>
 
 							<!-- i want to show > if !complete and not pushed, << if pushed & !complete, a Check if completed -->
-							<td>
-								<button ng-show="goal.completed"  type="button" class="btn btn-success" disabled="disabled">
+							<td>	
+								<!-- <goal-status></goal-status>	 -->											
+								<button ng-show="goal.completed" type="button" class="btn btn-success" disabled="disabled">
 									<i class="fa fa-check"></i>
 								</button>
-								<button ng-show="!goal.completed && goal.pushed" ng-if="goal.pushed" type="button" class="btn btn-success" ng-click="pushGoal(goal)">
+								<button ng-show="!goal.completed && goal.pushed" type="button" class="btn btn-success" ng-click="pushGoal(goal)">
 									<i class="fa fa-chevron-left"></i>
 								</button>	
 								<button ng-show="!goal.completed && !goal.pushed" type="button" class="btn btn-success" ng-click="pushGoal(goal)">

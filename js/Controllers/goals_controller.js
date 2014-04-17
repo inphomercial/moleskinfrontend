@@ -1,10 +1,13 @@
-MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, UsersService, GoalsService) {
+MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, $filter, UsersService, GoalsService) {
 	
 	// First check if user is logged in
 	UsersService.isLoggedIn();
 
 	// Create our goals container
 	$scope.goals = [];
+
+	// Date format for the datepicker
+	$scope.format = 'yyyy-MM-dd';
 
 	$rootScope.$on('goals.update', function( event ) {		
 		$scope.goals = GoalsService.goals;
@@ -28,11 +31,21 @@ MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, U
 
 	$scope.createGoal = function() {
 
+		if($scope.new_goal_due_date)
+		{
+			var date_filter = $filter('date');
+			formattedDate   = date_filter($scope.new_goal_due_date, 'yyyy-MM-dd');	
+		}
+		else
+		{
+			formattedDate = null;
+		}		
+
 		var goal = { 		
 			title: $scope.new_goal_title,
 			actionable_total: $scope.new_goal_actionable_total,
 			actionable_completed: 0,
-			due_date: $scope.new_goal_due_date,
+			due_date: formattedDate,
 			pushed: 0,
 			completed: 0
 		};

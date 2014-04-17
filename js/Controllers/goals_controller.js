@@ -91,6 +91,35 @@ MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, $
 		}
 	},
 
+	$scope.statusIsCompleted = function(goal) {
+		if( goal.completed )
+		{
+			return true;
+		}
+
+		return false;
+	},
+
+	$scope.statusIsNotCompletedAndNotPushed = function(goal) {
+		if( !goal.completed && !goal.pushed )
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	$scope.statusIsNotCompletedAndPushed = function(goal) {
+		if( !goal.completed && goal.pushed )
+		{
+			return true;
+		}
+
+		return false;
+	},
+
+
+
 	$scope.updateGoal = function(goal) {
 
 		GoalsService.updateGoal(goal);

@@ -27,9 +27,7 @@
 						<tr>
 							<th>Goal</th>
 							<th>Due Date</th>
-							<th>Actionables</th>							
-							<th>Pushed</th>
-							<th>Completed</th>							
+							<th>Actionables</th>											
 						</tr>
 					</thead>
 					<tbody>
@@ -56,12 +54,6 @@
 									  onaftersave="updateGoal(goal)">
 									  {{ goal.actionable_total }}
 								</span>
-							</td>
-							<td>
-								{{ goal.pushed }}
-							</td>
-							<td>
-								{{ goal.completed }}															
 							</td>							
 							<td>
 								<button type="button" class="btn btn-danger" ng-click="deleteGoal(goal)"> <i class="fa fa-trash-o"></i> </button>

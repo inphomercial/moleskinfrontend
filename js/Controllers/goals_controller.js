@@ -1,4 +1,4 @@
-MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, $filter, UsersService, GoalsService) {
+MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, $filter, DatesService, UsersService, GoalsService) {
 	
 	// First check if user is logged in
 	UsersService.isLoggedIn();
@@ -60,6 +60,7 @@ MoleskinApp.controller('goalsController', function ($scope, $rootScope, $http, $
 	$scope.pushGoal = function(goal) {
 
 		goal.pushed = (goal.pushed == 1) ? 0 : 1;
+		goal.date = DatesService.getToday();
 		GoalsService.updateGoal(goal);		
 	},
 

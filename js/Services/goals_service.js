@@ -17,9 +17,11 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
               });
       },
 
-       getPushedGoals: function() {
+       getPushedGoals: function( date ) {
 
-        return $http.get(MoleskinApp.url + 'goals/pushed')
+        console.log("Running getpushedgoals");
+
+        return $http.get(MoleskinApp.url + 'goals/pushed/' + date)
               .success(function(goals_pushed) {
                   GoalsService.goals_pushed = goals_pushed;
               })
@@ -128,6 +130,7 @@ MoleskinApp.factory('GoalsService', function($http, $rootScope) {
             $rootScope.$emit( 'goals.update' );
           })
           .error(function(data) {
+            console.log(data);
             alertify.error("Problem creating goal : " + data.message);
           }); 
       } 

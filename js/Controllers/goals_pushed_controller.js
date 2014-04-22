@@ -11,7 +11,7 @@ MoleskinApp.controller('goalsPushedController', function ($scope, $http, UsersSe
 	});
 
 	// Initilization 
-	var r = GoalsService.getPushedGoals();
+	var r = GoalsService.getPushedGoals(DatesService.getToday());
 	r.then(function (res) {
 		$scope.goals_pushed = GoalsService.goals_pushed;	
 	})

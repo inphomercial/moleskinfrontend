@@ -57,6 +57,8 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
                 if(TodosService.todos[i].id == todo.id) 
                 {                   
                     console.log("found todo");
+
+                    // Why doesnt todo.completed ? 0 : 1; work online??
                     todo.completed = (todo.completed == 1) ? 0 : 1;                    
                 }
             }
@@ -82,7 +84,8 @@ MoleskinApp.factory('TodosService', function($http, $rootScope, GoalsService, Da
 
         pushTodo: function( todo ) {
 
-            todo.pushed_times += 1;
+            // Why doesnt ++ or += work online?
+            todo.pushed_times = todo.pushed_times + 1;
             todo.date = DatesService.getTomorrow();
         
             TodosService.updateTodo(todo);

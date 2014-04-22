@@ -5,5 +5,5 @@ MoleskinApp.run(function(editableOptions) {
 	editableOptions.theme = 'bs3';
 });
 
-//MoleskinApp.url = "http://localhost/moleskin/public/index.php/";
-MoleskinApp.url = "http://inphomercial.com/moleskinbackend/";
+MoleskinApp.url = "http://localhost/moleskin/public/index.php/";
+//MoleskinApp.url = "http://inphomercial.com/moleskinbackend/";

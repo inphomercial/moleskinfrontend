@@ -1,4 +1,4 @@
-MoleskinApp.controller('todosController', function ($scope, $rootScope, $http, $location, UsersService, TodosService, DatesService) {
+MoleskinApp.controller('todosController', function ($scope, $rootScope, $http, $location, UsersService, TodosService, GoalsService, DatesService) {
 
 	// First check if user is logged in
 	UsersService.isLoggedIn();
@@ -22,6 +22,7 @@ MoleskinApp.controller('todosController', function ($scope, $rootScope, $http, $
     	DatesService.decrementDatePosition();    	
     	$scope.current_position_fancy = DatesService.getTodayFancy();
     	$scope.getTodosBasedOnDate();
+    	//GoalsService.getPushedGoals(DatesService.getToday());
     },
 
     $scope.incrementDate = function() {
@@ -29,6 +30,7 @@ MoleskinApp.controller('todosController', function ($scope, $rootScope, $http, $
     	DatesService.incrementDatePosition();    	
     	$scope.current_position_fancy = DatesService.getTodayFancy();
     	$scope.getTodosBasedOnDate();
+    	//GoalsService.getPushedGoals(DatesService.getToday());
     },
 
 	$scope.getTodosBasedOnDate = function() {
